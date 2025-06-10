@@ -1,50 +1,50 @@
-# Welcome to vLLM
+# 欢迎体验 vLLM
 
 <figure markdown="span">
-  ![](./assets/logos/vllm-logo-text-light.png){ align="center" alt="vLLM" class="no-scaled-link" width="60%" }
+  ![vllm](assets/logos/vllm-logo-only-light.ico){ align="center" alt="vLLM" class="no-scaled-link" width="60%" }
 </figure>
 
 <p style="text-align:center">
-<strong>Easy, fast, and cheap LLM serving for everyone
+<strong>为所有人提供简单、快速且低成本的 LLM 服务
 </strong>
 </p>
 
 <p style="text-align:center">
 <script async defer src="https://buttons.github.io/buttons.js"></script>
-<a class="github-button" href="https://github.com/vllm-project/vllm" data-show-count="true" data-size="large" aria-label="Star">Star</a>
-<a class="github-button" href="https://github.com/vllm-project/vllm/subscription" data-show-count="true" data-icon="octicon-eye" data-size="large" aria-label="Watch">Watch</a>
-<a class="github-button" href="https://github.com/vllm-project/vllm/fork" data-show-count="true" data-icon="octicon-repo-forked" data-size="large" aria-label="Fork">Fork</a>
+<a class="github-button" href="https://github.com/vllm-project/vllm" data-show-count="true" data-size="large" aria-label="Star">星标</a>
+<a class="github-button" href="https://github.com/vllm-project/vllm/subscription" data-show-count="true" data-icon="octicon-eye" data-size="large" aria-label="Watch">关注</a>
+<a class="github-button" href="https://github.com/vllm-project/vllm/fork" data-show-count="true" data-icon="octicon-repo-forked" data-size="large" aria-label="Fork">分叉</a>
 </p>
 
-vLLM is a fast and easy-to-use library for LLM inference and serving.
+vLLM 是一个快速且易用的 LLM 推理和服务库。
 
-Originally developed in the [Sky Computing Lab](https://sky.cs.berkeley.edu) at UC Berkeley, vLLM has evolved into a community-driven project with contributions from both academia and industry.
+vLLM 最初由 [加州伯克利 Sky Computing Lab](https://sky.cs.berkeley.edu) 开发，现已演变为一个由学术界和工业界共同贡献的社区驱动项目。
 
-vLLM is fast with:
+vLLM 的高效特性包括：
 
-- State-of-the-art serving throughput
-- Efficient management of attention key and value memory with [**PagedAttention**](https://blog.vllm.ai/2023/06/20/vllm.html)
-- Continuous batching of incoming requests
-- Fast model execution with CUDA/HIP graph
-- Quantization: [GPTQ](https://arxiv.org/abs/2210.17323), [AWQ](https://arxiv.org/abs/2306.00978), INT4, INT8, and FP8
-- Optimized CUDA kernels, including integration with FlashAttention and FlashInfer.
-- Speculative decoding
-- Chunked prefill
+- 最先进的吞吐量
+- 通过 [**PagedAttention**](https://blog.vllm.ai/2023/06/20/vllm.html) 高效管理注意力键和值内存
+- 持续批处理输入请求
+- 使用 CUDA/HIP 图加速模型执行
+- 量化支持：[GPTQ](https://arxiv.org/abs/2210.17323)、[AWQ](https://arxiv.org/abs/2306.00978)、INT4、INT8 和 FP8
+- 优化的 CUDA 内核，集成 FlashAttention 和 FlashInfer
+- 推测解码
+- 分块预填充
 
-vLLM is flexible and easy to use with:
+vLLM 的灵活性和易用性体现在：
 
-- Seamless integration with popular HuggingFace models
-- High-throughput serving with various decoding algorithms, including *parallel sampling*, *beam search*, and more
-- Tensor parallelism and pipeline parallelism support for distributed inference
-- Streaming outputs
-- OpenAI-compatible API server
-- Support NVIDIA GPUs, AMD CPUs and GPUs, Intel CPUs, Gaudi® accelerators and GPUs, IBM Power CPUs, TPU, and AWS Trainium and Inferentia Accelerators.
-- Prefix caching support
-- Multi-lora support
+- 与热门 HuggingFace 模型无缝集成
+- 支持多种解码算法的高吞吐量服务，包括*并行采样*、*束搜索*等
+- 支持张量并行和流水线并行以进行分布式推理
+- 流式输出
+- 兼容 OpenAI 的 API 服务器
+- 支持 NVIDIA GPU、AMD CPU 和 GPU、Intel CPU、Gaudi® 加速器和 GPU、IBM Power CPU、TPU，以及 AWS Trainium 和 Inferentia 加速器
+- 前缀缓存支持
+- 多 LoRA 支持
 
-For more information, check out the following:
+了解更多信息，请查看以下内容：
 
-- [vLLM announcing blog post](https://vllm.ai) (intro to PagedAttention)
-- [vLLM paper](https://arxiv.org/abs/2309.06180) (SOSP 2023)
-- [How continuous batching enables 23x throughput in LLM inference while reducing p50 latency](https://www.anyscale.com/blog/continuous-batching-llm-inference) by Cade Daniel et al.
-- [vLLM Meetups][meetups]
+- [vLLM 发布博客文章](https://vllm.ai)（PagedAttention 简介）
+- [vLLM 论文](https://arxiv.org/abs/2309.06180)（SOSP 2023）
+- [如何通过持续批处理实现 LLM 推理 23 倍吞吐量并降低 p50 延迟](https://www.anyscale.com/blog/continuous-batching-llm-inference) 作者：Cade Daniel 等
+- [vLLM 见面会][meetups]
