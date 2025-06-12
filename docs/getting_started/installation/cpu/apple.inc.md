@@ -1,18 +1,18 @@
 # --8<-- [start:installation]
 
-vLLM has experimental support for macOS with Apple silicon. For now, users shall build from the source vLLM to natively run on macOS.
+vLLM 对 macOS 的 Apple 芯片提供了实验性支持。目前，用户需要从源代码构建 vLLM 以在 macOS 上原生运行。
 
-Currently the CPU implementation for macOS supports FP32 and FP16 datatypes.
+当前 macOS 的 CPU 实现支持 FP32 和 FP16 数据类型。
 
 !!! warning
-    There are no pre-built wheels or images for this device, so you must build vLLM from source.
+    该设备没有预构建的轮子或镜像，因此必须从源代码构建 vLLM。
 
 # --8<-- [end:installation]
 # --8<-- [start:requirements]
 
-- OS: `macOS Sonoma` or later
-- SDK: `XCode 15.4` or later with Command Line Tools
-- Compiler: `Apple Clang >= 15.0.0`
+- 操作系统：`macOS Sonoma` 或更高版本
+- SDK：`XCode 15.4` 或更高版本，包含命令行工具
+- 编译器：`Apple Clang >= 15.0.0`
 
 # --8<-- [end:requirements]
 # --8<-- [start:set-up-using-python]
@@ -23,7 +23,7 @@ Currently the CPU implementation for macOS supports FP32 and FP16 datatypes.
 # --8<-- [end:pre-built-wheels]
 # --8<-- [start:build-wheel-from-source]
 
-After installation of XCode and the Command Line Tools, which include Apple Clang, execute the following commands to build and install vLLM from the source.
+在安装 XCode 和包含 Apple Clang 的命令行工具后，执行以下命令从源代码构建并安装 vLLM。
 
 ```console
 git clone https://github.com/vllm-project/vllm.git
@@ -33,12 +33,12 @@ pip install -e .
 ```
 
 !!! note
-    On macOS the `VLLM_TARGET_DEVICE` is automatically set to `cpu`, which currently is the only supported device.
+    在 macOS 上，`VLLM_TARGET_DEVICE` 自动设置为 `cpu`，目前这是唯一支持的设备。
 
-#### Troubleshooting
+#### 故障排除
 
-If the build has error like the following snippet where standard C++ headers cannot be found, try to remove and reinstall your
-[Command Line Tools for Xcode](https://developer.apple.com/download/all/).
+如果构建过程中出现如下错误片段，提示无法找到标准 C++ 头文件，请尝试卸载并重新安装您的
+[XCode 命令行工具](https://developer.apple.com/download/all/)。
 
 ```text
 [...] fatal error: 'map' file not found

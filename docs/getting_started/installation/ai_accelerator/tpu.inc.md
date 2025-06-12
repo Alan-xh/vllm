@@ -1,72 +1,54 @@
 # --8<-- [start:installation]
 
-Tensor Processing Units (TPUs) are Google's custom-developed application-specific
-integrated circuits (ASICs) used to accelerate machine learning workloads. TPUs
-are available in different versions each with different hardware specifications.
-For more information about TPUs, see [TPU System Architecture](https://cloud.google.com/tpu/docs/system-architecture-tpu-vm).
-For more information on the TPU versions supported with vLLM, see:
+张量处理单元（TPU）是谷歌专门为加速机器学习工作负载而开发的专用集成电路（ASIC）。TPU有不同版本，每种版本的硬件规格不同。有关TPU的更多信息，请参见[TPU系统架构](https://cloud.google.com/tpu/docs/system-architecture-tpu-vm)。有关vLLM支持的TPU版本的更多信息，请参见：
 
 - [TPU v6e](https://cloud.google.com/tpu/docs/v6e)
 - [TPU v5e](https://cloud.google.com/tpu/docs/v5e)
 - [TPU v5p](https://cloud.google.com/tpu/docs/v5p)
 - [TPU v4](https://cloud.google.com/tpu/docs/v4)
 
-These TPU versions allow you to configure the physical arrangements of the TPU
-chips. This can improve throughput and networking performance. For more
-information see:
+这些TPU版本允许您配置TPU芯片的物理排列。这可以提高吞吐量和网络性能。更多信息请参见：
 
-- [TPU v6e topologies](https://cloud.google.com/tpu/docs/v6e#configurations)
-- [TPU v5e topologies](https://cloud.google.com/tpu/docs/v5e#tpu-v5e-config)
-- [TPU v5p topologies](https://cloud.google.com/tpu/docs/v5p#tpu-v5p-config)
-- [TPU v4 topologies](https://cloud.google.com/tpu/docs/v4#tpu-v4-config)
+- [TPU v6e拓扑](https://cloud.google.com/tpu/docs/v6e#configurations)
+- [TPU v5e拓扑](https://cloud.google.com/tpu/docs/v5e#tpu-v5e-config)
+- [TPU v5p拓扑](https://cloud.google.com/tpu/docs/v5p#tpu-v5p-config)
+- [TPU v4拓扑](https://cloud.google.com/tpu/docs/v4#tpu-v4-config)
 
-In order for you to use Cloud TPUs you need to have TPU quota granted to your
-Google Cloud Platform project. TPU quotas specify how many TPUs you can use in a
-GPC project and are specified in terms of TPU version, the number of TPU you
-want to use, and quota type. For more information, see [TPU quota](https://cloud.google.com/tpu/docs/quota#tpu_quota).
+要使用Cloud TPU，您需要在Google Cloud Platform项目中获得TPU配额。TPU配额指定了您在一个GCP项目中可以使用的TPU数量，并以TPU版本、所需TPU数量和配额类型来定义。更多信息请参见[TPU配额](https://cloud.google.com/tpu/docs/quota#tpu_quota)。
 
-For TPU pricing information, see [Cloud TPU pricing](https://cloud.google.com/tpu/pricing).
+有关TPU定价信息，请参见[Cloud TPU定价](https://cloud.google.com/tpu/pricing)。
 
-You may need additional persistent storage for your TPU VMs. For more
-information, see [Storage options for Cloud TPU data](https://cloud.devsite.corp.google.com/tpu/docs/storage-options).
+您可能需要为TPU VM配置额外的持久存储。更多信息请参见[Cloud TPU数据的存储选项](https://cloud.devsite.corp.google.com/tpu/docs/storage-options)。
 
 !!! warning
-    There are no pre-built wheels for this device, so you must either use the pre-built Docker image or build vLLM from source.
+    该设备没有预构建的轮子，因此您必须使用预构建的Docker镜像或从源代码构建vLLM。
 
 # --8<-- [end:installation]
 # --8<-- [start:requirements]
 
 - Google Cloud TPU VM
-- TPU versions: v6e, v5e, v5p, v4
-- Python: 3.10 or newer
+- TPU版本：v6e、v5e、v5p、v4
+- Python：3.10或更高版本
 
-### Provision Cloud TPUs
+### 配置Cloud TPU
 
-You can provision Cloud TPUs using the [Cloud TPU API](https://cloud.google.com/tpu/docs/reference/rest)
-or the [queued resources](https://cloud.google.com/tpu/docs/queued-resources)
-API (preferred). This section shows how to create TPUs using the queued resource API. For
-more information about using the Cloud TPU API, see [Create a Cloud TPU using the Create Node API](https://cloud.google.com/tpu/docs/managing-tpus-tpu-vm#create-node-api).
-Queued resources enable you to request Cloud TPU resources in a queued manner.
-When you request queued resources, the request is added to a queue maintained by
-the Cloud TPU service. When the requested resource becomes available, it's
-assigned to your Google Cloud project for your immediate exclusive use.
+您可以使用[Cloud TPU API](https://cloud.google.com/tpu/docs/reference/rest)或[排队资源](https://cloud.google.com/tpu/docs/queued-resources)API（推荐）来配置Cloud TPU。本节展示如何使用排队资源API创建TPU。有关使用Cloud TPU API的更多信息，请参见[使用Create Node API创建Cloud TPU](https://cloud.google.com/tpu/docs/managing-tpus-tpu-vm#create-node-api)。排队资源允许您以排队的方式请求Cloud TPU资源。当您请求排队资源时，该请求会被添加到Cloud TPU服务维护的队列中。当请求的资源可用时，它会被分配给您的Google Cloud项目，供您立即独占使用。
 
 !!! note
-    In all of the following commands, replace the ALL CAPS parameter names with
-    appropriate values. See the parameter descriptions table for more information.
+    在以下所有命令中，将全大写的参数名称替换为适当的值。有关更多信息，请参见参数描述表。
 
-### Provision Cloud TPUs with GKE
+### 使用GKE配置Cloud TPU
 
-For more information about using TPUs with GKE, see:
+有关在GKE中使用TPU的更多信息，请参见：
 - <https://cloud.google.com/kubernetes-engine/docs/how-to/tpus>
 - <https://cloud.google.com/kubernetes-engine/docs/concepts/tpus>
 - <https://cloud.google.com/kubernetes-engine/docs/concepts/plan-tpus>
 
-## Configure a new environment
+## 配置新环境
 
-### Provision a Cloud TPU with the queued resource API
+### 使用排队资源API配置Cloud TPU
 
-Create a TPU v5e with 4 TPU chips:
+创建具有4个TPU芯片的TPU v5e：
 
 ```console
 gcloud alpha compute tpus queued-resources create QUEUED_RESOURCE_ID \
@@ -78,17 +60,17 @@ gcloud alpha compute tpus queued-resources create QUEUED_RESOURCE_ID \
 --service-account SERVICE_ACCOUNT
 ```
 
-| Parameter name     | Description                                                                                                                                                                                              |
+| 参数名称           | 描述                                                                                                                                                                                              |
 |--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| QUEUED_RESOURCE_ID | The user-assigned ID of the queued resource request.                                                                                                                                                     |
-| TPU_NAME           | The user-assigned name of the TPU which is created when the queued                                                                                                                                       |
-| PROJECT_ID         | Your Google Cloud project                                                                                                                                                                                |
-| ZONE               | The GCP zone where you want to create your Cloud TPU. The value you use                                                                                                                                  |
-| ACCELERATOR_TYPE   | The TPU version you want to use. Specify the TPU version, for example                                                                                                                                    |
-| RUNTIME_VERSION    | The TPU VM runtime version to use. For example, use `v2-alpha-tpuv6e` for a VM loaded with one or more v6e TPU(s). For more information see [TPU VM images](https://cloud.google.com/tpu/docs/runtimes). |
-  <figcaption>Parameter descriptions</figcaption>
+| QUEUED_RESOURCE_ID | 用户指定的排队资源请求ID。                                                                                                                                                                       |
+| TPU_NAME           | 用户指定的TPU名称，在排队资源创建时使用。                                                                                                                                                       |
+| PROJECT_ID         | 您的Google Cloud项目。                                                                                                                                                                            |
+| ZONE               | 您希望创建Cloud TPU的GCP区域。                                                                                                                                                                   |
+| ACCELERATOR_TYPE   | 您希望使用的TPU版本。例如，指定TPU版本。                                                                                                                                                         |
+| RUNTIME_VERSION    | TPU VM的运行时版本。例如，对于加载了一个或多个v6e TPU的VM，使用`v2-alpha-tpuv6e`。更多信息请参见[TPU VM镜像](https://cloud.google.com/tpu/docs/runtimes)。 |
+  <figcaption>参数描述</figcaption>
 
-Connect to your TPU using SSH:
+使用SSH连接到您的TPU：
 
 ```bash
 gcloud compute tpus tpu-vm ssh TPU_NAME --zone ZONE
@@ -100,12 +82,12 @@ gcloud compute tpus tpu-vm ssh TPU_NAME --zone ZONE
 # --8<-- [end:set-up-using-python]
 # --8<-- [start:pre-built-wheels]
 
-Currently, there are no pre-built TPU wheels.
+目前没有预构建的TPU轮子。
 
 # --8<-- [end:pre-built-wheels]
 # --8<-- [start:build-wheel-from-source]
 
-Install Miniconda:
+安装Miniconda：
 
 ```bash
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -113,33 +95,33 @@ bash Miniconda3-latest-Linux-x86_64.sh
 source ~/.bashrc
 ```
 
-Create and activate a Conda environment for vLLM:
+为vLLM创建并激活Conda环境：
 
 ```bash
 conda create -n vllm python=3.10 -y
 conda activate vllm
 ```
 
-Clone the vLLM repository and go to the vLLM directory:
+克隆vLLM仓库并进入vLLM目录：
 
 ```bash
 git clone https://github.com/vllm-project/vllm.git && cd vllm
 ```
 
-Uninstall the existing `torch` and `torch_xla` packages:
+卸载现有的`torch`和`torch_xla`包：
 
 ```bash
 pip uninstall torch torch-xla -y
 ```
 
-Install build dependencies:
+安装构建依赖项：
 
 ```bash
 pip install -r requirements/tpu.txt
 sudo apt-get install libopenblas-base libopenmpi-dev libomp-dev
 ```
 
-Run the setup script:
+运行安装脚本：
 
 ```bash
 VLLM_TARGET_DEVICE="tpu" python -m pip install -e .
@@ -151,33 +133,29 @@ VLLM_TARGET_DEVICE="tpu" python -m pip install -e .
 # --8<-- [end:set-up-using-docker]
 # --8<-- [start:pre-built-images]
 
-See [deployment-docker-pre-built-image][deployment-docker-pre-built-image] for instructions on using the official Docker image, making sure to substitute the image name `vllm/vllm-openai` with `vllm/vllm-tpu`.
+有关使用官方Docker镜像的说明，请参见[部署Docker预构建镜像][deployment-docker-pre-built-image]，确保将镜像名称`vllm/vllm-openai`替换为`vllm/vllm-tpu`。
 
 # --8<-- [end:pre-built-images]
 # --8<-- [start:build-image-from-source]
 
-You can use <gh-file:docker/Dockerfile.tpu> to build a Docker image with TPU support.
+您可以使用<gh-file:docker/Dockerfile.tpu>来构建支持TPU的Docker镜像。
 
 ```console
 docker build -f docker/Dockerfile.tpu -t vllm-tpu .
 ```
 
-Run the Docker image with the following command:
+使用以下命令运行Docker镜像：
 
 ```console
-# Make sure to add `--privileged --net host --shm-size=16G`.
+# 确保添加`--privileged --net host --shm-size=16G`。
 docker run --privileged --net host --shm-size=16G -it vllm-tpu
 ```
 
 !!! note
-    Since TPU relies on XLA which requires static shapes, vLLM bucketizes the
-    possible input shapes and compiles an XLA graph for each shape. The
-    compilation time may take 20~30 minutes in the first run. However, the
-    compilation time reduces to ~5 minutes afterwards because the XLA graphs are
-    cached in the disk (in `VLLM_XLA_CACHE_PATH` or `~/.cache/vllm/xla_cache` by default).
+    由于TPU依赖于需要静态形状的XLA，vLLM会对可能的输入形状进行分桶，并为每种形状编译一个XLA图。第一次运行的编译时间可能需要20~30分钟。然而，之后由于XLA图被缓存到磁盘（默认在`VLLM_XLA_CACHE_PATH`或`~/.cache/vllm/xla_cache`中），编译时间会减少到约5分钟。
 
 !!! tip
-    If you encounter the following error:
+    如果您遇到以下错误：
 
     ```console
     from torch._C import *  # noqa: F403
@@ -185,7 +163,7 @@ docker run --privileged --net host --shm-size=16G -it vllm-tpu
     file or directory
     ```
 
-    Install OpenBLAS with the following command:
+    使用以下命令安装OpenBLAS：
 
     ```console
     sudo apt-get install libopenblas-base libopenmpi-dev libomp-dev
@@ -194,5 +172,6 @@ docker run --privileged --net host --shm-size=16G -it vllm-tpu
 # --8<-- [end:build-image-from-source]
 # --8<-- [start:extra-information]
 
-There is no extra information for this device.
+此设备没有额外信息。
+
 # --8<-- [end:extra-information]

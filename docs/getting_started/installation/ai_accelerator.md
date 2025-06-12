@@ -1,6 +1,6 @@
-# Other AI accelerators
+# 其他 AI 加速器
 
-vLLM is a Python library that supports the following AI accelerators. Select your AI accelerator type to see vendor specific instructions:
+vLLM 是一个 Python 库，支持以下 AI 加速器。选择您的 AI 加速器类型以查看供应商特定的说明：
 
 === "Google TPU"
 
@@ -14,7 +14,7 @@ vLLM is a Python library that supports the following AI accelerators. Select you
 
     --8<-- "docs/getting_started/installation/ai_accelerator/neuron.inc.md:installation"
 
-## Requirements
+## 要求
 
 === "Google TPU"
 
@@ -28,7 +28,7 @@ vLLM is a Python library that supports the following AI accelerators. Select you
 
     --8<-- "docs/getting_started/installation/ai_accelerator/neuron.inc.md:requirements"
 
-## Configure a new environment
+## 配置新环境
 
 === "Google TPU"
 
@@ -42,9 +42,9 @@ vLLM is a Python library that supports the following AI accelerators. Select you
 
     --8<-- "docs/getting_started/installation/ai_accelerator/neuron.inc.md:configure-a-new-environment"
 
-## Set up using Python
+## 使用 Python 设置
 
-### Pre-built wheels
+### 预构建轮子
 
 === "Google TPU"
 
@@ -58,7 +58,7 @@ vLLM is a Python library that supports the following AI accelerators. Select you
 
     --8<-- "docs/getting_started/installation/ai_accelerator/neuron.inc.md:pre-built-wheels"
 
-### Build wheel from source
+### 从源代码构建轮子
 
 === "Google TPU"
 
@@ -72,9 +72,9 @@ vLLM is a Python library that supports the following AI accelerators. Select you
 
     --8<-- "docs/getting_started/installation/ai_accelerator/neuron.inc.md:build-wheel-from-source"
 
-## Set up using Docker
+## 使用 Docker 设置
 
-### Pre-built images
+### 预构建镜像
 
 === "Google TPU"
 
@@ -88,7 +88,7 @@ vLLM is a Python library that supports the following AI accelerators. Select you
 
     --8<-- "docs/getting_started/installation/ai_accelerator/neuron.inc.md:pre-built-images"
 
-### Build image from source
+### 从源代码构建镜像
 
 === "Google TPU"
 
@@ -102,7 +102,7 @@ vLLM is a Python library that supports the following AI accelerators. Select you
 
     --8<-- "docs/getting_started/installation/ai_accelerator/neuron.inc.md:build-image-from-source"
 
-## Extra information
+## 额外信息
 
 === "Google TPU"
 

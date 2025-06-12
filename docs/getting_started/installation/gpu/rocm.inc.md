@@ -1,14 +1,14 @@
 # --8<-- [start:installation]
 
-vLLM supports AMD GPUs with ROCm 6.3.
+vLLM 支持使用 ROCm 6.3 的 AMD GPU。
 
 !!! warning
-    There are no pre-built wheels for this device, so you must either use the pre-built Docker image or build vLLM from source.
+    此设备没有预构建的轮子（wheels），因此您必须使用预构建的 Docker 镜像或从源代码构建 vLLM。
 
 # --8<-- [end:installation]
 # --8<-- [start:requirements]
 
-- GPU: MI200s (gfx90a), MI300 (gfx942), Radeon RX 7900 series (gfx1100/1101), Radeon RX 9000 series (gfx1200/1201)
+- GPU：MI200s (gfx90a)、MI300 (gfx942)、Radeon RX 7900 系列 (gfx1100/1101)、Radeon RX 9000 系列 (gfx1200/1201)
 - ROCm 6.3
 
 # --8<-- [end:requirements]
@@ -17,29 +17,29 @@ vLLM supports AMD GPUs with ROCm 6.3.
 # --8<-- [end:set-up-using-python]
 # --8<-- [start:pre-built-wheels]
 
-Currently, there are no pre-built ROCm wheels.
+目前没有预构建的 ROCm 轮子。
 
 # --8<-- [end:pre-built-wheels]
 # --8<-- [start:build-wheel-from-source]
 
-0. Install prerequisites (skip if you are already in an environment/docker with the following installed):
+0. 安装前提条件（如果您已经在安装了以下内容的 Docker 或环境中，则可跳过）：
 
     - [ROCm](https://rocm.docs.amd.com/en/latest/deploy/linux/index.html)
     - [PyTorch](https://pytorch.org/)
 
-    For installing PyTorch, you can start from a fresh docker image, e.g, `rocm/pytorch:rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0`, `rocm/pytorch-nightly`. If you are using docker image, you can skip to Step 3.
+    安装 PyTorch 时，您可以从一个全新的 Docker 镜像开始，例如 `rocm/pytorch:rocm6.3_ubuntu24.04_pytorch_release_2.4.0` 或 `rocm/pytorch-nightly`。如果您使用的是 Docker 镜像，可以直接跳到第 3 步。
 
-    Alternatively, you can install PyTorch using PyTorch wheels. You can check PyTorch installation guide in PyTorch [Getting Started](https://pytorch.org/get-started/locally/). Example:
+    或者，您可以使用 PyTorch 轮子安装 PyTorch。请参考 PyTorch [安装指南](https://pytorch.org/get-started/locally/)。示例：
 
     ```console
-    # Install PyTorch
+    # 安装 PyTorch
     $ pip uninstall torch -y
-    $ pip install --no-cache-dir --pre torch --index-url https://download.pytorch.org/whl/nightly/rocm6.3
+    $ pip install --no-cache-dir --pre torch --index-url https://download.pytorch.org/whl/nightly-rocm6.3
     ```
 
-1. Install [Triton flash attention for ROCm](https://github.com/ROCm/triton)
+1. 安装 [ROCm 的 Triton Flash Attention](https://github.com/ROCm/triton)
 
-    Install ROCm's Triton flash attention (the default triton-mlir branch) following the instructions from [ROCm/triton](https://github.com/ROCm/triton/blob/triton-mlir/README.md)
+    按照 [ROCm/triton](https://github.com/ROCm/triton/blob/triton-mlir/README.md) 的说明安装 ROCm 的 Triton Flash Attention（默认使用 triton-mlir 分支）：
 
     ```console
     python3 -m pip install ninja cmake wheel pybind11
@@ -53,14 +53,13 @@ Currently, there are no pre-built ROCm wheels.
     ```
 
     !!! note
-        If you see HTTP issue related to downloading packages during building triton, please try again as the HTTP error is intermittent.
+        如果在构建 Triton 时遇到与下载包相关的 HTTP 问题，请重试，因为 HTTP 错误是间歇性的。
 
-2. Optionally, if you choose to use CK flash attention, you can install [flash attention for ROCm](https://github.com/ROCm/flash-attention)
+2. （可选）如果选择使用 CK Flash Attention，可以安装 [ROCm 的 Flash Attention](https://github.com/ROCm/flash-attention)
 
-    Install ROCm's flash attention (v2.7.2) following the instructions from [ROCm/flash-attention](https://github.com/ROCm/flash-attention#amd-rocm-support)
-    Alternatively, wheels intended for vLLM use can be accessed under the releases.
+    按照 [ROCm/flash-attention](https://github.com/ROCm/flash-attention#amd-rocm-support) 的说明安装 ROCm 的 Flash Attention（v2.7.2）。或者，可以在发布版本中访问专为 vLLM 使用的轮子。
 
-    For example, for ROCm 6.3, suppose your gfx arch is `gfx90a`. To get your gfx architecture, run `rocminfo |grep gfx`.
+    例如，对于 ROCm 6.3，假设您的 gfx 架构为 `gfx90a`。要获取您的 gfx 架构，请运行 `rocminfo |grep gfx`。
 
     ```console
     git clone https://github.com/ROCm/flash-attention.git
@@ -72,9 +71,9 @@ Currently, there are no pre-built ROCm wheels.
     ```
 
     !!! note
-        You might need to downgrade the "ninja" version to 1.10 as it is not used when compiling flash-attention-2 (e.g. `pip install ninja==1.10.2.4`)
+        编译 flash-attention-2 时可能需要将 "ninja" 版本降级到 1.10（例如 `pip install ninja==1.10.2.4`）。
 
-3. If you choose to build AITER yourself to use a certain branch or commit, you can build AITER using the following steps:
+3. 如果选择自行构建 AITER 以使用特定分支或提交，可以按照以下步骤构建 AITER：
 
     ```console
     python3 -m pip uninstall -y aiter
@@ -86,65 +85,63 @@ Currently, there are no pre-built ROCm wheels.
     ```
 
     !!! note
-        You will need to config the `$AITER_BRANCH_OR_COMMIT` for your purpose.
+        您需要根据需要配置 `$AITER_BRANCH_OR_COMMIT`。
 
-4. Build vLLM. For example, vLLM on ROCM 6.3 can be built with the following steps:
+4. 构建 vLLM。例如，ROCm 6.3 上的 vLLM 可以通过以下步骤构建：
 
     ```bash
     pip install --upgrade pip
 
-    # Build & install AMD SMI
+    # 构建并安装 AMD SMI
     pip install /opt/rocm/share/amd_smi
 
-    # Install dependencies
+    # 安装依赖
     pip install --upgrade numba \
         scipy \
         huggingface-hub[cli,hf_transfer] \
         setuptools_scm
     pip install "numpy<2"
-    pip install -r requirements/rocm.txt
+    pip install -r requirements-rocm.txt
 
-    # Build vLLM for MI210/MI250/MI300.
+    # 为 MI210/MI250/MI300 构建 vLLM
     export PYTORCH_ROCM_ARCH="gfx90a;gfx942"
     python3 setup.py develop
     ```
 
-    This may take 5-10 minutes. Currently, `pip install .` does not work for ROCm installation.
+    此过程可能需要 5-10 分钟。目前，`pip install .` 不适用于 ROCm 安装。
 
     !!! tip
-        - Triton flash attention is used by default. For benchmarking purposes, it is recommended to run a warm up step before collecting perf numbers.
-        - Triton flash attention does not currently support sliding window attention. If using half precision, please use CK flash-attention for sliding window support.
-        - To use CK flash-attention or PyTorch naive attention, please use this flag `export VLLM_USE_TRITON_FLASH_ATTN=0` to turn off triton flash attention.
-        - The ROCm version of PyTorch, ideally, should match the ROCm driver version.
+        - 默认使用 Triton Flash Attention。为基准测试目的，建议在收集性能数据之前运行预热步骤。
+        - Triton Flash Attention 目前不支持滑动窗口注意力。如果使用半精度，请使用 CK Flash Attention 以支持滑动窗口。
+        - 要使用 CK Flash Attention 或 PyTorch 原生注意力，请使用以下标志 `export VLLM_USE_TRITON_FLASH_ATTN=0` 关闭 Triton Flash Attention。
+        - 理想情况下，PyTorch 的 ROCm 版本应与 ROCm 驱动程序版本匹配。
 
 !!! tip
-    - For MI300x (gfx942) users, to achieve optimal performance, please refer to [MI300x tuning guide](https://rocm.docs.amd.com/en/latest/how-to/tuning-guides/mi300x/index.html) for performance optimization and tuning tips on system and workflow level.
-      For vLLM, please refer to [vLLM performance optimization](https://rocm.docs.amd.com/en/latest/how-to/tuning-guides/mi300x/workload.html#vllm-performance-optimization).
+    - 对于 MI300x (gfx942) 用户，为了获得最佳性能，请参阅 [MI300x 调优指南](https://rocm.docs.amd.com/en/latest/how-to/tuning-guides/mi300x/index.html) 以获取系统和工作流级别的性能优化和调优建议。
+      对于 vLLM，请参阅 [vLLM 性能优化](https://rocm.docs.amd.com/en/latest/how-to/tuning-guides/mi300x/workload.html#vllm-performance-optimization)。
 
-## Set up using Docker (Recommended)
+## 使用 Docker 进行设置（推荐）
 
 # --8<-- [end:set-up-using-docker]
 # --8<-- [start:pre-built-images]
 
-The [AMD Infinity hub for vLLM](https://hub.docker.com/r/rocm/vllm/tags) offers a prebuilt, optimized
-docker image designed for validating inference performance on the AMD Instinct™ MI300X accelerator.
+[AMD Infinity hub for vLLM](https://hub.docker.com/r/rocm/vllm/tags) 提供了一个预构建且优化的 Docker 镜像，专为在 AMD Instinct™ MI300X 加速器上验证推理性能而设计。
 
 !!! tip
-    Please check [LLM inference performance validation on AMD Instinct MI300X](https://rocm.docs.amd.com/en/latest/how-to/performance-validation/mi300x/vllm-benchmark.html)
-    for instructions on how to use this prebuilt docker image.
+    请查看 [AMD Instinct MI300X 上的 LLM 推理性能验证](https://rocm.docs.amd.com/en/latest/how-to/performance-validation/mi300x/vllm-benchmark.html) 以获取有关如何使用此预构建 Docker 镜像的说明。
 
 # --8<-- [end:pre-built-images]
 # --8<-- [start:build-image-from-source]
 
-Building the Docker image from source is the recommended way to use vLLM with ROCm.
+从源代码构建 Docker 镜像是使用 ROCm 的 vLLM 的推荐方式。
 
-#### (Optional) Build an image with ROCm software stack
+#### （可选）构建包含 ROCm 软件栈的镜像
 
-Build a docker image from <gh-file:docker/Dockerfile.rocm_base> which setup ROCm software stack needed by the vLLM.
-**This step is optional as this rocm_base image is usually prebuilt and store at [Docker Hub](https://hub.docker.com/r/rocm/vllm-dev) under tag `rocm/vllm-dev:base` to speed up user experience.**
-If you choose to build this rocm_base image yourself, the steps are as follows.
+从 <gh-file:docker/Dockerfile.rocm_base> 构建一个 Docker 镜像，设置 vLLM 所需的 ROCm 软件栈。
+**此步骤为可选步骤，因为 rocm_base 镜像通常已预构建并存储在 [Docker Hub](https://hub.docker.com/r/rocm/vllm-dev) 的 `rocm/vllm-dev:base` 标签下，以提升用户体验。**
+如果您选择自行构建此 rocm_base 镜像，步骤如下。
 
-It is important that the user kicks off the docker build using buildkit. Either the user put DOCKER_BUILDKIT=1 as environment variable when calling docker build command, or the user needs to setup buildkit in the docker daemon configuration /etc/docker/daemon.json as follows and restart the daemon:
+用户必须使用 buildkit 启动 Docker 构建。用户可以在调用 Docker 构建命令时将 `DOCKER_BUILDKIT=1` 设置为环境变量，或者在 Docker 守护进程配置 `/etc/docker/daemon.json` 中设置 buildkit 并重启守护进程，配置如下：
 
 ```console
 {
@@ -154,7 +151,7 @@ It is important that the user kicks off the docker build using buildkit. Either 
 }
 ```
 
-To build vllm on ROCm 6.3 for MI200 and MI300 series, you can use the default:
+为 MI200 和 MI300 系列在 ROCm 6.3 上构建 vLLM，可以使用默认设置：
 
 ```console
 DOCKER_BUILDKIT=1 docker build \
@@ -162,10 +159,10 @@ DOCKER_BUILDKIT=1 docker build \
     -t rocm/vllm-dev:base .
 ```
 
-#### Build an image with vLLM
+#### 构建包含 vLLM 的镜像
 
-First, build a docker image from <gh-file:docker/Dockerfile.rocm> and launch a docker container from the image.
-It is important that the user kicks off the docker build using buildkit. Either the user put `DOCKER_BUILDKIT=1` as environment variable when calling docker build command, or the user needs to setup buildkit in the docker daemon configuration /etc/docker/daemon.json as follows and restart the daemon:
+首先，从 <gh-file:docker/Dockerfile.rocm> 构建一个 Docker 镜像，并从该镜像启动一个 Docker 容器。
+用户必须使用 buildkit 启动 Docker 构建。用户可以在调用 Docker 构建命令时将 `DOCKER_BUILDKIT=1` 设置为环境变量，或者在 Docker 守护进程配置 `/etc/docker/daemon.json` 中设置 buildkit 并重启守护进程，配置如下：
 
 ```console
 {
@@ -175,21 +172,21 @@ It is important that the user kicks off the docker build using buildkit. Either 
 }
 ```
 
-<gh-file:docker/Dockerfile.rocm> uses ROCm 6.3 by default, but also supports ROCm 5.7, 6.0, 6.1, and 6.2, in older vLLM branches.
-It provides flexibility to customize the build of docker image using the following arguments:
+<gh-file:docker/Dockerfile.rocm> 默认使用 ROCm 6.3，但也支持 ROCm 5.7、6.0、6.1 和 6.2（在较旧的 vLLM 分支中）。
+它提供了通过以下参数自定义 Docker 镜像构建的灵活性：
 
-- `BASE_IMAGE`: specifies the base image used when running `docker build`. The default value `rocm/vllm-dev:base` is an image published and maintained by AMD. It is being built using <gh-file:docker/Dockerfile.rocm_base>
-- `ARG_PYTORCH_ROCM_ARCH`: Allows to override the gfx architecture values from the base docker image
+- `BASE_IMAGE`：指定运行 `docker build` 时使用的基本镜像。默认值 `rocm/vllm-dev:base` 是由 AMD 发布和维护的镜像，使用 <gh-file:docker/Dockerfile.rocm_base> 构建。
+- `ARG_PYTORCH_ROCM_ARCH`：允许覆盖基本 Docker 镜像中的 gfx 架构值。
 
-Their values can be passed in when running `docker build` with `--build-arg` options.
+这些值可以在运行 `docker build` 时通过 `--build-arg` 选项传递。
 
-To build vllm on ROCm 6.3 for MI200 and MI300 series, you can use the default:
+为 MI200 和 MI300 系列在 ROCm 6.3 上构建 vLLM，可以使用默认设置：
 
 ```console
 DOCKER_BUILDKIT=1 docker build -f docker/Dockerfile.rocm -t vllm-rocm .
 ```
 
-To build vllm on ROCm 6.3 for Radeon RX7900 series (gfx1100), you should pick the alternative base image:
+为 Radeon RX7900 系列 (gfx1100) 在 ROCm 6.3 上构建 vLLM，应选择替代的基本镜像：
 
 ```console
 DOCKER_BUILDKIT=1 docker build \
@@ -199,7 +196,7 @@ DOCKER_BUILDKIT=1 docker build \
     .
 ```
 
-To run the above docker image `vllm-rocm`, use the below command:
+要运行上述 Docker 镜像 `vllm-rocm`，请使用以下命令：
 
 ```console
 docker run -it \
@@ -215,9 +212,9 @@ docker run -it \
    bash
 ```
 
-Where the `<path/to/model>` is the location where the model is stored, for example, the weights for llama2 or llama3 models.
+其中 `<path/to/model>` 是模型存储的位置，例如 llama2 或 llama3 模型的权重。
 
-## Supported features
+## 支持的功能
 
-See [feature-x-hardware][feature-x-hardware] compatibility matrix for feature support information.
+请参阅 [功能与硬件兼容性矩阵][feature-x-hardware] 以获取功能支持信息。
 # --8<-- [end:extra-information]

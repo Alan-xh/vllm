@@ -1,15 +1,15 @@
 # --8<-- [start:installation]
 
-vLLM initially supports basic model inference and serving on Intel GPU platform.
+vLLM 最初支持在 Intel GPU 平台上进行基本模型推理和服务。
 
 !!! warning
-    There are no pre-built wheels or images for this device, so you must build vLLM from source.
+    该设备没有预构建的 wheel 或镜像，因此您必须从源代码构建 vLLM。
 
 # --8<-- [end:installation]
 # --8<-- [start:requirements]
 
-- Supported Hardware: Intel Data Center GPU, Intel ARC GPU
-- OneAPI requirements: oneAPI 2025.0
+- 支持的硬件：Intel 数据中心 GPU，Intel ARC GPU
+- OneAPI 要求：oneAPI 2025.0
 
 # --8<-- [end:requirements]
 # --8<-- [start:set-up-using-python]
@@ -17,13 +17,13 @@ vLLM initially supports basic model inference and serving on Intel GPU platform.
 # --8<-- [end:set-up-using-python]
 # --8<-- [start:pre-built-wheels]
 
-Currently, there are no pre-built XPU wheels.
+目前没有预构建的 XPU wheel。
 
 # --8<-- [end:pre-built-wheels]
 # --8<-- [start:build-wheel-from-source]
 
-- First, install required driver and Intel OneAPI 2025.0 or later.
-- Second, install Python packages for vLLM XPU backend building:
+- 首先，安装所需的驱动程序和 Intel OneAPI 2025.0 或更高版本。
+- 其次，安装用于构建 vLLM XPU 后端的 Python 包：
 
 ```console
 git clone https://github.com/vllm-project/vllm.git
@@ -32,15 +32,14 @@ pip install --upgrade pip
 pip install -v -r requirements/xpu.txt
 ```
 
-- Then, build and install vLLM XPU backend:
+- 然后，构建并安装 vLLM XPU 后端：
 
 ```console
 VLLM_TARGET_DEVICE=xpu python setup.py install
 ```
 
 !!! note
-    - FP16 is the default data type in the current XPU backend. The BF16 data
-      type is supported on Intel Data Center GPU, not supported on Intel Arc GPU yet.
+    - FP16 是当前 XPU 后端的默认数据类型。BF16 数据类型在 Intel 数据中心 GPU 上受支持，但尚不支持 Intel Arc GPU。
 
 # --8<-- [end:build-wheel-from-source]
 # --8<-- [start:set-up-using-docker]
@@ -48,7 +47,7 @@ VLLM_TARGET_DEVICE=xpu python setup.py install
 # --8<-- [end:set-up-using-docker]
 # --8<-- [start:pre-built-images]
 
-Currently, there are no pre-built XPU images.
+目前没有预构建的 XPU 镜像。
 
 # --8<-- [end:pre-built-images]
 # --8<-- [start:build-image-from-source]
@@ -63,9 +62,9 @@ $ docker run -it \
              vllm-xpu-env
 ```
 
-## Supported features
+## 支持的功能
 
-XPU platform supports **tensor parallel** inference/serving and also supports **pipeline parallel** as a beta feature for online serving. We require Ray as the distributed runtime backend. For example, a reference execution like following:
+XPU 平台支持**张量并行**推理/服务，并支持作为在线服务的 beta 功能的**管道并行**。我们需要 Ray 作为分布式运行时后端。例如，以下是一个参考执行：
 
 ```console
 python -m vllm.entrypoints.openai.api_server \
@@ -77,5 +76,5 @@ python -m vllm.entrypoints.openai.api_server \
      -tp=8
 ```
 
-By default, a ray instance will be launched automatically if no existing one is detected in the system, with `num-gpus` equals to `parallel_config.world_size`. We recommend properly starting a ray cluster before execution, referring to the <gh-file:examples/online_serving/run_cluster.sh> helper script.
+默认情况下，如果系统中未检测到现有的 Ray 实例，将自动启动一个 Ray 实例，其中 `num-gpus` 等于 `parallel_config.world_size`。我们建议在执行前正确启动一个 Ray 集群，请参考 <gh-file:examples/online_serving/run_cluster.sh> 辅助脚本。
 # --8<-- [end:extra-information]

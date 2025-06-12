@@ -1,8 +1,8 @@
 # 欢迎体验 vLLM
 
-<figure markdown="span">
-  ![vllm](assets/logos/vllm-logo-only-light.ico){ align="center" alt="vLLM" class="no-scaled-link" width="60%" }
-</figure>
+<p align="center">
+  <img src="assets/logos/vllm-logo-only-light.ico" alt="vLLM Logo" style="display: block; margin: 0 auto; max-width: 60%; height: auto;">
+</p>
 
 <p style="text-align:center">
 <strong>为所有人提供简单、快速且低成本的 LLM 服务

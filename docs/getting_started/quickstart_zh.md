@@ -114,7 +114,7 @@ vllm serve Qwen/Qwen2.5-1.5B-Instruct
 ```
 
 !!! note
-    默认情况下，服务器使用存储在分词器中的预定义聊天模板。您可以 [此处][chat-template] 了解如何覆盖它。
+    默认情况下，服务器使用存储在分词器中的预定义聊天模板。您可以 [here][chat-template] 了解如何覆盖它。
 
 !!! warning
     默认情况下，如果 Hugging Face 模型库中存在 `generation_config.json`，服务器将应用它。这意味着某些采样参数的默认值可能会被模型创建者推荐的值覆盖。
