@@ -1,39 +1,39 @@
-# NVIDIA TensorRT Model Optimizer
+# NVIDIA TensorRT 模型优化器
 
-The [NVIDIA TensorRT Model Optimizer](https://github.com/NVIDIA/TensorRT-Model-Optimizer) is a library designed to optimize models for inference with NVIDIA GPUs. It includes tools for Post-Training Quantization (PTQ) and Quantization Aware Training (QAT) of Large Language Models (LLMs), Vision Language Models (VLMs), and diffusion models.
+[NVIDIA TensorRT 模型优化器](https://github.com/NVIDIA/TensorRT-Model-Optimizer) 是一个专为 NVIDIA GPU 优化推理模型的库。它包括用于大型语言模型（LLM）、视觉语言模型（VLM）和扩散模型的后训练量化（PTQ）和量化感知训练（QAT）的工具。
 
-We recommend installing the library with:
+我们建议使用以下命令安装该库：
 
 ```console
 pip install nvidia-modelopt
 ```
 
-## Quantizing HuggingFace Models with PTQ
+## 使用 PTQ 量化 HuggingFace 模型
 
-You can quantize HuggingFace models using the example scripts provided in the TensorRT Model Optimizer repository. The primary script for LLM PTQ is typically found within the `examples/llm_ptq` directory.
+您可以使用 TensorRT 模型优化器仓库中提供的示例脚本来量化 HuggingFace 模型。用于 LLM PTQ 的主要脚本通常位于 `examples/llm_ptq` 目录中。
 
-Below is an example showing how to quantize a model using modelopt's PTQ API:
+以下是一个展示如何使用 modelopt 的 PTQ API 量化模型的示例：
 
 ```python
 import modelopt.torch.quantization as mtq
 from transformers import AutoModelForCausalLM
 
-# Load the model from HuggingFace
+# 从 HuggingFace 加载模型
 model = AutoModelForCausalLM.from_pretrained("<path_or_model_id>")
 
-# Select the quantization config, for example, FP8
+# 选择量化配置，例如 FP8
 config = mtq.FP8_DEFAULT_CFG
 
-# Define a forward loop function for calibration
+# 定义用于校准的前向循环函数
 def forward_loop(model):
     for data in calib_set:
         model(data)
 
-# PTQ with in-place replacement of quantized modules
+# 使用原地替换量化模块进行 PTQ
 model = mtq.quantize(model, config, forward_loop)
 ```
 
-After the model is quantized, you can export it to a quantized checkpoint using the export API:
+在模型量化完成后，您可以使用导出 API 将其导出为量化检查点：
 
 ```python
 import torch
@@ -41,12 +41,12 @@ from modelopt.torch.export import export_hf_checkpoint
 
 with torch.inference_mode():
     export_hf_checkpoint(
-        model,  # The quantized model.
-        export_dir,  # The directory where the exported files will be stored.
+        model,  # 量化后的模型
+        export_dir,  # 导出文件存储的目录
     )
 ```
 
-The quantized checkpoint can then be deployed with vLLM. As an example, the following code shows how to deploy `nvidia/Llama-3.1-8B-Instruct-FP8`, which is the FP8 quantized checkpoint derived from `meta-llama/Llama-3.1-8B-Instruct`, using vLLM:
+随后，量化检查点可以与 vLLM 一起部署。作为示例，以下代码展示了如何使用 vLLM 部署 `nvidia/Llama-3.1-8B-Instruct-FP8`，这是从 `meta-llama/Llama-3.1-8B-Instruct` 派生的 FP8 量化检查点：
 
 ```python
 from vllm import LLM, SamplingParams
@@ -54,16 +54,16 @@ from vllm import LLM, SamplingParams
 def main():
 
     model_id = "nvidia/Llama-3.1-8B-Instruct-FP8"
-    # Ensure you specify quantization='modelopt' when loading the modelopt checkpoint
+    # 确保在加载 modelopt 检查点时指定 quantization='modelopt'
     llm = LLM(model=model_id, quantization="modelopt", trust_remote_code=True)
 
     sampling_params = SamplingParams(temperature=0.8, top_p=0.9)
 
     prompts = [
-        "Hello, my name is",
-        "The president of the United States is",
-        "The capital of France is",
-        "The future of AI is",
+        "你好，我的名字是",
+        "美国总统是",
+        "法国的首都是",
+        "人工智能的未来是",
     ]
 
     outputs = llm.generate(prompts, sampling_params)
@@ -71,7 +71,7 @@ def main():
     for output in outputs:
         prompt = output.prompt
         generated_text = output.outputs[0].text
-        print(f"Prompt: {prompt!r}, Generated text: {generated_text!r}")
+        print(f"提示: {prompt!r}, 生成的文本: {generated_text!r}")
 
 if __name__ == "__main__":
     main()

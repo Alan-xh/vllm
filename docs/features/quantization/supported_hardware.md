@@ -1,11 +1,11 @@
 ---
-title: Supported Hardware
+title: 支持的硬件
 ---
 [](){ #quantization-supported-hardware }
 
-The table below shows the compatibility of various quantization implementations with different hardware platforms in vLLM:
+下表显示了 vLLM 中不同量化实现与各种硬件平台的兼容性：
 
-| Implementation        | Volta   | Turing   | Ampere   | Ada   | Hopper   | AMD GPU   | Intel GPU   | x86 CPU   | AWS Neuron   | Google TPU   |
+| 实现方式              | Volta   | Turing   | Ampere   | Ada   | Hopper   | AMD GPU   | Intel GPU   | x86 CPU   | AWS Neuron   | Google TPU   |
 |-----------------------|---------|----------|----------|-------|----------|-----------|-------------|-----------|------------------|--------------|
 | AWQ                   | ❌       | ✅︎       | ✅︎       | ✅︎    | ✅︎       | ❌         | ✅︎          | ✅︎        | ❌                | ❌            |
 | GPTQ                  | ✅︎      | ✅︎       | ✅︎       | ✅︎    | ✅︎       | ❌         | ✅︎          | ✅︎        | ❌                | ❌            |
@@ -18,11 +18,11 @@ The table below shows the compatibility of various quantization implementations 
 | DeepSpeedFP           | ✅︎      | ✅︎       | ✅︎       | ✅︎    | ✅︎       | ❌         | ❌           | ❌         | ❌                | ❌            |
 | GGUF                  | ✅︎      | ✅︎       | ✅︎       | ✅︎    | ✅︎       | ✅︎        | ❌           | ❌         | ❌                | ❌            |
 
-- Volta refers to SM 7.0, Turing to SM 7.5, Ampere to SM 8.0/8.6, Ada to SM 8.9, and Hopper to SM 9.0.
-- ✅︎ indicates that the quantization method is supported on the specified hardware.
-- ❌ indicates that the quantization method is not supported on the specified hardware.
+- Volta 指 SM 7.0，Turing 指 SM 7.5，Ampere 指 SM 8.0/8.6，Ada 指 SM 8.9，Hopper 指 SM 9.0。
+- ✅︎ 表示该量化方法在指定硬件上受支持。
+- ❌ 表示该量化方法在指定硬件上不受支持。
 
 !!! note
-    This compatibility chart is subject to change as vLLM continues to evolve and expand its support for different hardware platforms and quantization methods.
+    随着 vLLM 的不断发展和扩展对不同硬件平台和量化方法的支持，此兼容性表可能会发生变化。
 
-    For the most up-to-date information on hardware support and quantization methods, please refer to <gh-dir:vllm/model_executor/layers/quantization> or consult with the vLLM development team.
+    有关硬件支持和量化方法的最新信息，请参阅 <gh-dir:vllm/model_executor/layers/quantization> 或咨询 vLLM 开发团队。

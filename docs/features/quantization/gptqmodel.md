@@ -3,33 +3,27 @@ title: GPTQModel
 ---
 [](){ #gptqmodel }
 
-To create a new 4-bit or 8-bit GPTQ quantized model, you can leverage [GPTQModel](https://github.com/ModelCloud/GPTQModel) from ModelCloud.AI.
+要创建新的4位或8位GPTQ量化模型，您可以利用来自ModelCloud.AI的[GPTQModel](https://github.com/ModelCloud/GPTQModel)。
 
-Quantization reduces the model's precision from BF16/FP16 (16-bits) to INT4 (4-bits) or INT8 (8-bits) which significantly reduces the
-total model memory footprint while at-the-same-time increasing inference performance.
+量化将模型的精度从BF16/FP16（16位）降低到INT4（4位）或INT8（8位），这显著减少了模型的总内存占用，同时提高了推理性能。
 
-Compatible GPTQModel quantized models can leverage the `Marlin` and `Machete` vLLM custom kernels to maximize batching
-transactions-per-second `tps` and token-latency performance for both Ampere (A100+) and Hopper (H100+) Nvidia GPUs.
-These two kernels are highly optimized by vLLM and NeuralMagic (now part of Redhat) to allow world-class inference performance of quantized GPTQ
-models.
+兼容的GPTQModel量化模型可以利用`Marlin`和`Machete` vLLM自定义内核，最大化Ampere（A100+）和Hopper（H100+）Nvidia GPU的批量处理事务每秒（`tps`）和令牌延迟性能。这两个内核由vLLM和NeuralMagic（现为Redhat的一部分）高度优化，以实现量化的GPTQ模型的世界级推理性能。
 
-GPTQModel is one of the few quantization toolkits in the world that allows `Dynamic` per-module quantization where different layers and/or modules within a llm model can be further optimized with custom quantization parameters. `Dynamic` quantization
-is fully integrated into vLLM and backed up by support from the ModelCloud.AI team. Please refer to [GPTQModel readme](https://github.com/ModelCloud/GPTQModel?tab=readme-ov-file#dynamic-quantization-per-module-quantizeconfig-override)
-for more details on this and other advanced features.
+GPTQModel是全球少数支持`动态`每模块量化的工具包之一，允许对大型语言模型的不同层和/或模块使用自定义量化参数进行进一步优化。`动态`量化已完全集成到vLLM中，并得到ModelCloud.AI团队的支持。请参阅[GPTQModel readme](https://github.com/ModelCloud/GPTQModel?tab=readme-ov-file#dynamic-quantization-per-module-quantizeconfig-override)以获取更多详细信息和其他高级功能。
 
-## Installation
+## 安装
 
-You can quantize your own models by installing [GPTQModel](https://github.com/ModelCloud/GPTQModel) or picking one of the [5000+ models on Huggingface](https://huggingface.co/models?search=gptq).
+您可以通过安装[GPTQModel](https://github.com/ModelCloud/GPTQModel)或从[Huggingface上的5000多个模型](https://huggingface.co/models?search=gptq)中选择一个来量化您自己的模型。
 
 ```console
 pip install -U gptqmodel --no-build-isolation -v
 ```
 
-## Quantizing a model
+## 量化模型
 
-After installing GPTQModel, you are ready to quantize a model. Please refer to the [GPTQModel readme](https://github.com/ModelCloud/GPTQModel/?tab=readme-ov-file#quantization) for further details.
+安装GPTQModel后，您可以开始量化模型。请参阅[GPTQModel readme](https://github.com/ModelCloud/GPTQModel/?tab=readme-ov-file#quantization)以获取更多详细信息。
 
-Here is an example of how to quantize `meta-llama/Llama-3.2-1B-Instruct`:
+以下是如何量化`meta-llama/Llama-3.2-1B-Instruct`的示例：
 
 ```python
 from datasets import load_dataset
@@ -48,51 +42,50 @@ quant_config = QuantizeConfig(bits=4, group_size=128)
 
 model = GPTQModel.load(model_id, quant_config)
 
-# increase `batch_size` to match gpu/vram specs to speed up quantization
+# 增加`batch_size`以匹配GPU/VRAM规格以加速量化
 model.quantize(calibration_dataset, batch_size=2)
 
 model.save(quant_path)
 ```
 
-## Running a quantized model with vLLM
+## 使用vLLM运行量化模型
 
-To run an GPTQModel quantized model with vLLM, you can use [DeepSeek-R1-Distill-Qwen-7B-gptqmodel-4bit-vortex-v2](https://huggingface.co/ModelCloud/DeepSeek-R1-Distill-Qwen-7B-gptqmodel-4bit-vortex-v2) with the following command:
+要使用vLLM运行GPTQModel量化模型，您可以使用[DeepSeek-R1-Distill-Qwen-7B-gptqmodel-4bit-vortex-v2](https://huggingface.co/ModelCloud/DeepSeek-R1-Distill-Qwen-7B-gptqmodel-4bit-vortex-v2)，命令如下：
 
 ```console
 python examples/offline_inference/llm_engine_example.py \
     --model ModelCloud/DeepSeek-R1-Distill-Qwen-7B-gptqmodel-4bit-vortex-v2
 ```
 
-## Using GPTQModel with vLLM's Python API
+## 使用vLLM的Python API运行GPTQModel
 
-GPTQModel quantized models are also supported directly through the LLM entrypoint:
+GPTQModel量化模型也直接通过LLM入口点支持：
 
 ```python
 from vllm import LLM, SamplingParams
 
-# Sample prompts.
+# 示例提示
 prompts = [
-    "Hello, my name is",
-    "The president of the United States is",
-    "The capital of France is",
-    "The future of AI is",
+    "你好，我的名字是",
+    "美国总统是",
+    "法国的首都是",
+    "人工智能的未来是",
 ]
 
-# Create a sampling params object.
+# 创建采样参数对象
 sampling_params = SamplingParams(temperature=0.6, top_p=0.9)
 
-# Create an LLM.
+# 创建LLM
 llm = LLM(model="ModelCloud/DeepSeek-R1-Distill-Qwen-7B-gptqmodel-4bit-vortex-v2")
 
-# Generate texts from the prompts. The output is a list of RequestOutput objects
-# that contain the prompt, generated text, and other information.
+# 从提示生成文本。输出是包含提示、生成文本和其他信息的RequestOutput对象列表
 outputs = llm.generate(prompts, sampling_params)
 
-# Print the outputs.
+# 打印输出
 print("-"*50)
 for output in outputs:
     prompt = output.prompt
     generated_text = output.outputs[0].text
-    print(f"Prompt: {prompt!r}\nGenerated text: {generated_text!r}")
+    print(f"提示: {prompt!r}\n生成文本: {generated_text!r}")
     print("-"*50)
 ```
